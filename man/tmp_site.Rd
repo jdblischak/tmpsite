@@ -2,7 +2,7 @@
 % Please edit documentation in R/tmp_site.R
 \name{tmp_site}
 \alias{tmp_site}
-\title{Custom site generator to render in /tmp}
+\title{Custom site generator to render in in a temporary directory}
 \usage{
 tmp_site(input, encoding = getOption("encoding"), ...)
 }
@@ -14,7 +14,7 @@ tmp_site(input, encoding = getOption("encoding"), ...)
 \item{...}{Additional arguments (currently unused)}
 }
 \description{
-To render your R Markdown documents in \code{/tmp}, you need to add a file
+To render your R Markdown documents in a temporary directory, you need to add a file
 \code{index.Rmd} that specifies \code{site: tmpsite::tmp_site} in the YAML
 header.
 }
