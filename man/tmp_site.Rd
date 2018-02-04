@@ -14,7 +14,12 @@ tmp_site(input, encoding = getOption("encoding"), ...)
 \item{...}{Additional arguments (currently unused)}
 }
 \description{
-To render your R Markdown documents in a temporary directory, you need to add a file
-\code{index.Rmd} that specifies \code{site: tmpsite::tmp_site} in the YAML
-header.
+To render your R Markdown documents in a temporary directory, you need to add
+a file \code{index.Rmd} that specifies \code{site: tmpsite::tmp_site} in the
+YAML header.
+}
+\details{
+For tmp_site, it is preferred to pass a character vector, e.g.
+\code{"html_document"}, instead of the object itself, e.g.
+\code{html_document()}.
 }

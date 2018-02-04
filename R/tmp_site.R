@@ -2,9 +2,13 @@
 
 #' Custom site generator to render in in a temporary directory
 #'
-#' To render your R Markdown documents in a temporary directory, you need to add a file
-#' \code{index.Rmd} that specifies \code{site: tmpsite::tmp_site} in the YAML
-#' header.
+#' To render your R Markdown documents in a temporary directory, you need to add
+#' a file \code{index.Rmd} that specifies \code{site: tmpsite::tmp_site} in the
+#' YAML header.
+#'
+#' For tmp_site, it is preferred to pass a character vector, e.g.
+#' \code{"html_document"}, instead of the object itself, e.g.
+#' \code{html_document()}.
 #'
 #' @inheritParams rmarkdown::render_site
 #'
@@ -19,6 +23,7 @@ tmp_site <- function(input, encoding = getOption("encoding"), ...) {
                      envir,
                      quiet,
                      encoding, ...) {
+
 
     input_file_w_path <- normalizePath(input_file)
     # Copy the entire project to temporary directory
@@ -43,9 +48,29 @@ tmp_site <- function(input, encoding = getOption("encoding"), ...) {
     # Remove temporary directory
     unlink(dir_tmp, recursive = TRUE)
 
-    # Open in RStudio Viewer
-    if (!quiet) {
-      output_file <- sub("[Rr]md$", "html", input_file)
+    # Figure out the format of the output document. By default it is NULL, so it
+    # needs to be read from the YAML header. Alternatively, the user can choose
+    # a format other than the first one listed in the header by passing a
+    # string, e.g. "html_document" or a function, e.g. html_document().
+    if (is.null(output_format)) {
+      # Read the YAML header
+      header <- rmarkdown::yaml_front_matter(input_file)
+      output_format <- names(header$output)[1]
+    } else if (class(output_format) == "rmarkdown_output_format") {
+      # If it's an object, send warning that it'd work better if they passed a
+      # string
+      warning("For tmp_site, it is preferred to pass a character vector,",
+              "e.g. \"html_document\", instead of the object itself,",
+              "e.g. html_document()")
+    }
+
+    if (!quiet && is.character(output_format)) {
+      if (output_format == "word_document") {
+        extension <- "docx"
+      } else {
+        extension <- unlist(strsplit(output_format, "_"))[1]
+      }
+      output_file <- sub("[Rr]md$", extension, input_file)
       message("\nOutput created: ", output_file)
     }
   }
