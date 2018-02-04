@@ -1,0 +1,15 @@
+Package: tmpsite
+Type: Package
+Title: Render your R Markdown documents in `/tmp`
+Version: 0.1.0
+Author: Who wrote it
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: This package implements a custom site generator that will 1) copy your project
+             directory to `/tmp`, render your R Markdown document, and then copy the
+             project back to its original location on your file system.
+License: CC0
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    rmarkdown
+RoxygenNote: 6.0.1
