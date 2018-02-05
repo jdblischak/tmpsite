@@ -14,12 +14,28 @@ tmp_site(input, encoding = getOption("encoding"), ...)
 \item{...}{Additional arguments (currently unused)}
 }
 \description{
-To render your R Markdown documents in a temporary directory, you need to add
-a file \code{index.Rmd} that specifies \code{site: tmpsite::tmp_site} in the
-YAML header.
+To render your R Markdown documents in a temporary directory, run
+\code{\link{render_rmd_in_tmp}} in the directory that contains the R Markdown
+files. Afterwards, using the RStudio Knit HTML button will automatically use
+this custom site generator.
 }
 \details{
-For tmp_site, it is preferred to pass a character vector, e.g.
+If you render the file from the R console, use
+\code{\link[rmarkdown]{render_site}}. If you specify the
+\code{output_format}, it is preferred to pass a character vector, e.g.
 \code{"html_document"}, instead of the object itself, e.g.
 \code{html_document()}.
+}
+\examples{
+\dontrun{
+
+library("rmarkdown")
+render_site("example.Rmd", "html_document")
+render_site("example.Rmd", "pdf_document")
+render_site("example.Rmd", "word_document")
+}
+}
+\seealso{
+\code{\link{render_rmd_in_tmp}},
+  \code{\link[rmarkdown]{render_site}}
 }
