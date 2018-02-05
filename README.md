@@ -2,7 +2,7 @@
 
 ## Problem
 
-Pandoc has a known bug where it will occassionally error when running on a file
+Pandoc has a known bug where it will occasionally error when running on a file
 located on a Windows share mounted on a Linux machine. This affects R Markdown
 documents because they are passed to Pandoc after knitting with knitr.
 
@@ -19,7 +19,7 @@ install the package from GitHub and then run the one-time setup in the directory
 that contains the R Markdown files.
 
 ```r
-devtools::intall_github("jdblischa/tmpsite")
+devtools::intall_github("jdblischak/tmpsite")
 tmpsite::render_rmd_in_tmp()
 ```
 

@@ -16,8 +16,10 @@ tmp_site(input, encoding = getOption("encoding"), ...)
 \description{
 To render your R Markdown documents in a temporary directory, run
 \code{\link{render_rmd_in_tmp}} in the directory that contains the R Markdown
-files. Afterwards, using the RStudio Knit HTML button will automatically use
-this custom site generator.
+files. Afterwards, using the RStudio Knit button will automatically use this
+custom site generator. If you receive an error from RStudio, make sure the
+Knit Directory is set to Document Directory (you can set this with the
+dropdown menu next to the Knit button).
 }
 \details{
 If you render the file from the R console, use
