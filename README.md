@@ -45,6 +45,11 @@ opposed to the entire directory as is currently done). This would have multiple
 benefits: 1) faster because less to copy and 2) paths to files outside of the
 project directory could be used.
 
+Another limitation is that `tmp_site` currently only supports rendering one file
+at a time, and thus will throw an error if provided a directory. This was done
+out of convenience and it would be straightforward to enhance the functionality
+to be similar to `rmarkdown::default_site`.
+
 ## License
 
 This code is in the public domain, i.e.

@@ -10,10 +10,11 @@
 #' dropdown menu next to the Knit button).
 #'
 #' If you render the file from the R console, use
-#' \code{\link[rmarkdown]{render_site}}. If you specify the
-#' \code{output_format}, it is preferred to pass a character vector, e.g.
-#' \code{"html_document"}, instead of the object itself, e.g.
-#' \code{html_document()}.
+#' \code{\link[rmarkdown]{render_site}}. \code{tmp_site} currently only supports
+#' rendering one file at a time, and thus will throw an error if provided a
+#' directory. If you specify the \code{output_format}, it is preferred to pass a
+#' character vector, e.g. \code{"html_document"}, instead of the object itself,
+#' e.g. \code{html_document()}.
 #'
 #' @inheritParams rmarkdown::render_site
 #'
@@ -38,6 +39,10 @@ tmp_site <- function(input, encoding = getOption("encoding"), ...) {
                      quiet,
                      encoding, ...) {
 
+    # If a directory is passed to render_site, NULL is passed as the input_file.
+    if (is.null(input_file))
+      stop("tmp_site currently only supports rendering one file at a time.",
+           " Pass the path to an R Markdown file, not a directory.")
 
     input_file_w_path <- normalizePath(input_file)
     # Copy the entire project to temporary directory
