@@ -50,11 +50,11 @@ tmp_site <- function(input, encoding = getOption("encoding"), ...) {
     file_tmp <- file.path(dir_new, basename(input_file))
 
     # Render the file
-    suppressMessages(rmarkdown::render(file_tmp,
-                      output_format = output_format,
-                      envir = envir,
-                      quiet = quiet,
-                      encoding = encoding))
+    suppressMessages(output_file <- rmarkdown::render(file_tmp,
+                                                      output_format = output_format,
+                                                      envir = envir,
+                                                      quiet = quiet,
+                                                      encoding = encoding))
 
     # Copy the entire project back
     file.copy(from = dir_new, to = dir_upstream, recursive = TRUE, overwrite = TRUE)
@@ -62,31 +62,14 @@ tmp_site <- function(input, encoding = getOption("encoding"), ...) {
     # Remove temporary directory
     unlink(dir_tmp, recursive = TRUE)
 
-    # Figure out the format of the output document. By default it is NULL, so it
-    # needs to be read from the YAML header. Alternatively, the user can choose
-    # a format other than the first one listed in the header by passing a
-    # string, e.g. "html_document" or a function, e.g. html_document().
-    if (is.null(output_format)) {
-      # Read the YAML header
-      header <- rmarkdown::yaml_front_matter(input_file)
-      output_format <- names(header$output)[1]
-    } else if (class(output_format) == "rmarkdown_output_format") {
-      # If it's an object, send warning that it'd work better if they passed a
-      # string
-      warning("For tmp_site, it is preferred to pass a character vector,",
-              "e.g. \"html_document\", instead of the object itself,",
-              "e.g. html_document()")
-    }
+    # Fix output_file name
+    output_file <- file.path(dir_proj, basename(output_file))
 
-    if (!quiet && is.character(output_format)) {
-      if (output_format == "word_document") {
-        extension <- "docx"
-      } else {
-        extension <- unlist(strsplit(output_format, "_"))[1]
-      }
-      output_file <- sub("[Rr]md$", extension, input_file)
+    if (!quiet) {
       message("\nOutput created: ", output_file)
     }
+
+    return(invisible(output_file))
   }
 
   # return site generator
